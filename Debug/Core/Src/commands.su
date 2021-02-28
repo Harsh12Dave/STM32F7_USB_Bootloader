@@ -1,0 +1,5 @@
+core_cm7.h:2147:34:__NVIC_SystemReset	4	static,ignoring_inline_asm
+commands.c:23:6:COMMAND_DOWNLOAD	32	static
+commands.c:60:6:COMMAND_JUMP	8	static
+commands.c:71:6:COMMAND_ProgramFlashMemory	24	static
+commands.c:89:6:dummy	24	static
