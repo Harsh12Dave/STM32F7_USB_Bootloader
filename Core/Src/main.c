@@ -36,7 +36,6 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define bool uint8_t
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -51,7 +50,7 @@ ETH_HandleTypeDef heth;
 UART_HandleTypeDef huart3;
 
 /* USER CODE BEGIN PV */
-typedef void (*pFunction)(void);
+//typedef void (*pFunction)(void);
 
 #ifdef __GNUC__
 /* With GCC, small printf (option LD Linker->Libraries->Small printf
@@ -71,26 +70,8 @@ PUTCHAR_PROTOTYPE
   return ch;
 }
 
-
-extern char USBH_Path[4];  /* USBH Logical drive path */
-//File IO Variables
-FIL myFile;
-FIL fileR;
-FRESULT res;
-UINT byteswritten, bytesread;
-char rwtext[100];  //Read/Write buf
-
-//1. USB test Write function
-bool UsbTest_Write(void);
-//2. USB test Read function
-bool UsbTest_Read(void);
-
-bool read_flag = 1;
-bool enabled = 0;
 extern ApplicationTypeDef Appli_state;
 
-//FATFS Variables
-FATFS myUsbFatFS;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -142,18 +123,21 @@ int main(void)
 	MX_FATFS_Init();
 	MX_USB_HOST_Init();
 	/* USER CODE BEGIN 2 */
-	if(ImageThereorNot())
-	{
-		BOOT_LOG("Image is already present jumping to it\r\n");
-		SetupBootAddress(1);
-	}
-	else
-	{
-		SetupBootAddress(0);
-		BOOT_LOG("Image not there\r\n");
-	}
 	BOOT_LOG("HW PERIPHERALS ARE INITIALIZED..\r\n");
-	BOOT_LOG("ENTERING USB EVENT LOOP..\r\n");
+	BOOT_LOG("USB BOOTLOADER ..\r\n");
+//	BOOT_LOG("THIS SECOND APP\r\n");
+	while(1)
+	{
+		MX_USB_HOST_Process();
+		USBEventHandler();
+		if(no_usb_detected())
+		{
+			BootAppImage();
+			printf("starting user application\r\n");
+			break;
+		}
+	}
+	printf("About to start user app now\r\n");
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -161,10 +145,10 @@ int main(void)
 	while (1)
 	{
 		/* USER CODE END WHILE */
-		MX_USB_HOST_Process();
+		//MX_USB_HOST_Process();
 
 		/* USER CODE BEGIN 3 */
-		USBEventHandler();
+
 	/* USER CODE END 3 */
 	}
 }
@@ -319,7 +303,7 @@ void USBEventHandler(void)
 			break;
 
 		case APPLICATION_START:
-			if(f_mount(&myUsbFatFS, (TCHAR const*)USBH_Path, 0) == FR_OK)
+			if(COMMAND_PREPARE_USB() == 0)
 			{
 				//Turn Green LED ON
 				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_SET);
@@ -337,63 +321,6 @@ void USBEventHandler(void)
 			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET);
 			break;
 	}
-}
-
-//1. USB test Write function
-bool UsbTest_Write(void)
-{
-	//Open/Create file for Writing
-	if(f_open(&myFile, "TEST.TXT", FA_CREATE_ALWAYS | FA_WRITE) != FR_OK)
-	{
-		return 0; //error
-	}
-	else
-	{
-		//Set text string to write to file
-		sprintf(rwtext, "Hello world from Harsh Dave and Sachin Rajput from Grey Matter Technology .... !!!");
-		//write to file
-		res = f_write(&myFile, (uint8_t *)rwtext, strlen(rwtext), &byteswritten);
-		if((byteswritten == 0) || (res != FR_OK))
-		{
-			return 0; //error
-		}
-	}
-
-	//Close file
-	f_close(&myFile);
-	return 1; //success
-}
-
-//2. USB test Read function
-bool UsbTest_Read(void)
-{
-	//Open file for Reading
-	if(f_open(&myFile, "TEST.TXT", FA_READ) != FR_OK)
-	{
-		return 0; //error
-	}
-	else
-	{
-		//Read text from files until NULL
-		for(uint8_t i=0; i<100; i++)
-		{
-			res = f_read(&myFile, (uint8_t*)&rwtext[i], 1, &bytesread);
-			if(rwtext[i] == 0x00)
-			{
-				bytesread = i;
-				break;
-			}
-		}
-		HAL_UART_Transmit(&huart3, rwtext,
-							10, 0xFFFF);
-		//Reading error handling
-		if(bytesread==0) return 0;
-
-	}
-
-	//Close file
-	f_close(&myFile);
-	return 1; //success
 }
 /* USER CODE END 4 */
 

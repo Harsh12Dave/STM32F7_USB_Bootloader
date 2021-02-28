@@ -10,10 +10,8 @@
 #define KCYN  "\x1B[36m"
 #define KWHT  "\x1B[37m"
 
-#define BOOT_LOG(args) BOOTLOADER_LOG(KGRN args KWHT)
-#define BOOT_ERR(args) BOOTLOADER_LOG(KRED args KWHT)
-
-#define BOOTLOADER_LOG(f_, ...) printf((f_), ##__VA_ARGS__)
-#define APP_LOG(f_, ...) printf((f_), ##__VA_ARGS__)
+#define BOOT_LOG(args) printf(KGRN args KWHT)
+#define BOOT_ERR(args) printf(KRED args KWHT)
+#define APP_LOG(args) printf(args)
 
 #endif /* INC_LOG_H_ */

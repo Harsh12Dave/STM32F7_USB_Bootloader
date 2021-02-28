@@ -28,7 +28,7 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN TD */
-
+unsigned short overflow;
 /* USER CODE END TD */
 
 /* Private define ------------------------------------------------------------*/
@@ -187,12 +187,9 @@ void SysTick_Handler(void)
   /* USER CODE END SysTick_IRQn 0 */
   HAL_IncTick();
   /* USER CODE BEGIN SysTick_IRQn 1 */
-  static uint16_t i = 0;
-  i++;
-  if(i == 500)
+  if(overflow < 10000)
   {
-	  APP_LOG("This dummy App-1 is not blinking any LED\r\n");
-	  i = 0;
+	  overflow++;
   }
   /* USER CODE END SysTick_IRQn 1 */
 }

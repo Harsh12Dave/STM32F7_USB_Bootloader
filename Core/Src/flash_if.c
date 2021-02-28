@@ -107,55 +107,55 @@ HAL_StatusTypeDef Write_To_Flash(struct flash_write_config * configuration)
 }
 
 
-void SetupBootAddress(int addr)
-{
-    HAL_FLASH_Unlock();
+//void SetupBootAddress(int addr)
+//{
+//    HAL_FLASH_Unlock();
+//
+//    /* Allow Access to option bytes sector */
+//    HAL_FLASH_OB_Unlock();
+//
+//    /* Switch Boot bank: the BootAddrx value "0x2040" corresponds to bank2 address: "0x08100000" */
+//
+//    if(addr == 0)
+//    {
+//    	OBInit.OptionType = OPTIONBYTE_BOOTADDR_0 | OPTIONBYTE_BOOTADDR_1;
+// 	    OBInit.BootAddr0  = __HAL_FLASH_CALC_BOOT_BASE_ADR(0x08000000);
+//    	OBInit.BootAddr1  = __HAL_FLASH_CALC_BOOT_BASE_ADR(0x08000000);
+//    }
+//    else
+//    {
+//       	OBInit.OptionType = OPTIONBYTE_BOOTADDR_0 | OPTIONBYTE_BOOTADDR_1;
+//     	OBInit.BootAddr0  = __HAL_FLASH_CALC_BOOT_BASE_ADR(0x08100000);
+//        OBInit.BootAddr1  = __HAL_FLASH_CALC_BOOT_BASE_ADR(0x08100000);
+//    }
+//
+//    if(HAL_FLASHEx_OBProgram(&OBInit) != HAL_OK)
+//    {
+//    	;
+//    }
+//
+//    /* Start the Option Bytes programming process */
+//    if (HAL_FLASH_OB_Launch() != HAL_OK)
+//    {
+//    	;
+//    }
+//
+//    /* Prevent Access to option bytes sector */
+//    HAL_FLASH_OB_Lock();
+//
+//    /* Disable the Flash option control register access (recommended to protect
+//    the option Bytes against possible unwanted operations) */
+//    HAL_FLASH_Lock();
+//}
 
-    /* Allow Access to option bytes sector */
-    HAL_FLASH_OB_Unlock();
-
-    /* Switch Boot bank: the BootAddrx value "0x2040" corresponds to bank2 address: "0x08100000" */
-
-    if(addr == 0)
-    {
-    	OBInit.OptionType = OPTIONBYTE_BOOTADDR_0 | OPTIONBYTE_BOOTADDR_1;
- 	    OBInit.BootAddr0  = __HAL_FLASH_CALC_BOOT_BASE_ADR(0x08000000);
-    	OBInit.BootAddr1  = __HAL_FLASH_CALC_BOOT_BASE_ADR(0x08000000);
-    }
-    else
-    {
-       	OBInit.OptionType = OPTIONBYTE_BOOTADDR_0 | OPTIONBYTE_BOOTADDR_1;
-     	OBInit.BootAddr0  = __HAL_FLASH_CALC_BOOT_BASE_ADR(0x08100000);
-        OBInit.BootAddr1  = __HAL_FLASH_CALC_BOOT_BASE_ADR(0x08100000);
-    }
-
-    if(HAL_FLASHEx_OBProgram(&OBInit) != HAL_OK)
-    {
-    	;
-    }
-
-    /* Start the Option Bytes programming process */
-    if (HAL_FLASH_OB_Launch() != HAL_OK)
-    {
-    	;
-    }
-
-    /* Prevent Access to option bytes sector */
-    HAL_FLASH_OB_Lock();
-
-    /* Disable the Flash option control register access (recommended to protect
-    the option Bytes against possible unwanted operations) */
-    HAL_FLASH_Lock();
-}
-
-int ImageThereorNot(void)
-{
-	int ret = 0;
-	if(*(uint32_t *)0x081C0000 == 0x12341234)
-	{
-		ret = 1;
-	}
-
-	return ret;
-}
+//int ImageThereorNot(void)
+//{
+//	int ret = 0;
+//	if(*(uint32_t *)0x081C0000 == 0x12341234)
+//	{
+//		ret = 1;
+//	}
+//
+//	return ret;
+//}
 

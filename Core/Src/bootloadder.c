@@ -7,6 +7,10 @@ void BootAppImage(void)
 	BOOT_LOG("EXECUTING APPLICATION IMAGE\r\n");
 	uint8_t i = 0;
 	uint32_t msp_value = *(volatile uint32_t *)0x8100000;
+	if(msp_value == 0xFFFFFFFF)
+	{
+		return;
+	}
 	uint32_t resest_address = *(volatile uint32_t *)0x8100004;
 	__set_MSP(msp_value);
 	AppEntry Jump = (void *)resest_address;

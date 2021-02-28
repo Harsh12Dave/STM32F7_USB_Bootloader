@@ -20,17 +20,17 @@
 #include "flash_if.h"
 #include "fatfs.h"
 
-#define BUFFER_SIZE (512*64)
+#define BUFFER_SIZE (512*64*2)
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 /* Exported macros -----------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
+char COMMAND_PREPARE_USB(void);
 void COMMAND_UPLOAD(void);
 void COMMAND_DOWNLOAD(void);
 void COMMAND_JUMP(void);
 void COMMAND_ProgramFlashMemory(void);
-void dummy(void);
 
 #ifdef __cplusplus
 }
