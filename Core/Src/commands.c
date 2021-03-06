@@ -2,13 +2,10 @@
 #include "fatfs.h"
 #include "log.h"
 #include "main.h"
+#include "bootloader.h"
+#include "Config.h"
 
-/* Private typedef -----------------------------------------------------------*/
-/* Private defines -----------------------------------------------------------*/
-#define DOWNLOAD_FILENAME          "0:image.bin"
-/* Private macros ------------------------------------------------------------*/
-extern char USBH_Path[4];  /* USBH Logical drive path */
-/* Private variables ---------------------------------------------------------*/
+extern char USBH_Path[4];
 static uint8_t RAM_Buf[BUFFER_SIZE] =
 {
 		0x00
@@ -34,7 +31,7 @@ extern FILINFO fno;
 
 unsigned char no_usb_detected(void)
 {
-	if((overflow >= 10000) && (detetcted_flag == 0))
+	if((overflow >= USB_WAIT_PERIOD) && (detetcted_flag == 0))
 	{
 		return 1;
 	}
@@ -72,6 +69,7 @@ void COMMAND_DOWNLOAD(void)
 			{
 				Erase_Flash();
 				COMMAND_ProgramFlashMemory();
+				printf("Flashing completed..\r\nPlease remove the USB stick\r\n");
 				BootAppImage();
 				f_close (&fileR);
 				f_mount(NULL, (TCHAR const*)USBH_Path, 0);

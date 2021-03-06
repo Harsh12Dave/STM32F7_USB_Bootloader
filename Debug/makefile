@@ -55,7 +55,7 @@ all: USB_BOOTLOADER.elf secondary-outputs
 
 # Tool invocations
 USB_BOOTLOADER.elf: $(OBJS) $(USER_OBJS) C:\Users\daveh\STM32CubeIDE\workspace_1.4.0\twating\USB_BOOTLOADER\STM32F767ZITX_FLASH.ld
-	arm-none-eabi-gcc -o "USB_BOOTLOADER.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"C:\Users\daveh\STM32CubeIDE\workspace_1.4.0\twating\USB_BOOTLOADER\STM32F767ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="USB_BOOTLOADER.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+	arm-none-eabi-gcc -o "USB_BOOTLOADER.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"C:\Users\daveh\STM32CubeIDE\workspace_1.4.0\twating\USB_BOOTLOADER\STM32F767ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="USB_BOOTLOADER.map" -Wl,--gc-sections -static -L"C:\Users\daveh\STM32CubeIDE\workspace_1.4.0\twating\USB_BOOTLOADER\Lib" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

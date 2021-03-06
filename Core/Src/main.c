@@ -27,6 +27,7 @@
 #include "flash_if.h"
 #include "commands.h"
 #include "log.h"
+#include "Config.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -123,21 +124,21 @@ int main(void)
 	MX_FATFS_Init();
 	MX_USB_HOST_Init();
 	/* USER CODE BEGIN 2 */
-	BOOT_LOG("HW PERIPHERALS ARE INITIALIZED..\r\n");
-	BOOT_LOG("USB BOOTLOADER ..\r\n");
-//	BOOT_LOG("THIS SECOND APP\r\n");
+	BOOT_LOG("USB BOOTLOADER..\r\n");
+	printf("Please insert USB stick in 10 seconds\r\n");
 	while(1)
 	{
 		MX_USB_HOST_Process();
 		USBEventHandler();
 		if(no_usb_detected())
 		{
+			printf("No USB stick found..");
+			printf("Exiting USB BOOTLOADER\r\n");
 			BootAppImage();
 			printf("starting user application\r\n");
 			break;
 		}
 	}
-	printf("About to start user app now\r\n");
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -316,7 +317,6 @@ void USBEventHandler(void)
 			break;
 
 		case APPLICATION_DISCONNECT:
-			BOOT_LOG("APPLICATION DISCONNECT\r\n");
 			//Turn Green LED OFF
 			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET);
 			break;

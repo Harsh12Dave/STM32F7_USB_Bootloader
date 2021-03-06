@@ -46,7 +46,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Middlewares/Third_Party/FatFs/src/diskio.h \
  ../Middlewares/Third_Party/FatFs/src/ff.h ../FATFS/Target/usbh_diskio.h \
  ../USB_HOST/App/usb_host.h ../Core/Inc/flash_if.h ../Core/Inc/commands.h \
- ../Core/Inc/flash_if.h ../Core/Inc/log.h
+ ../Core/Inc/flash_if.h ../Core/Inc/log.h ../Core/Inc/Config.h
 
 ../Core/Inc/main.h:
 
@@ -157,3 +157,5 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Core/Inc/flash_if.h:
 
 ../Core/Inc/log.h:
+
+../Core/Inc/Config.h:

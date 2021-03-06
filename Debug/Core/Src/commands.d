@@ -47,7 +47,7 @@ Core/Src/commands.o: ../Core/Src/commands.c ../Core/Inc/commands.h \
  ../Middlewares/Third_Party/FatFs/src/ff_gen_drv.h \
  ../Middlewares/Third_Party/FatFs/src/diskio.h \
  ../Middlewares/Third_Party/FatFs/src/ff.h ../FATFS/Target/usbh_diskio.h \
- ../Core/Inc/log.h
+ ../Core/Inc/log.h ../Core/Inc/bootloader.h ../Core/Inc/Config.h
 
 ../Core/Inc/commands.h:
 
@@ -154,3 +154,7 @@ Core/Src/commands.o: ../Core/Src/commands.c ../Core/Inc/commands.h \
 ../FATFS/Target/usbh_diskio.h:
 
 ../Core/Inc/log.h:
+
+../Core/Inc/bootloader.h:
+
+../Core/Inc/Config.h:

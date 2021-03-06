@@ -1,4 +1,3 @@
-"Core/Src/bootloadder.o"
 "Core/Src/commands.o"
 "Core/Src/flash_if.o"
 "Core/Src/main.o"
